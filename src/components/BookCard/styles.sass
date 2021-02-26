@@ -1,0 +1,54 @@
+.book-card
+  background-color: var(--color-card-background)
+  box-shadow: 0 0.1875rem 0.375rem var(--color-shadow)
+  border-radius: 1.25rem
+  margin: 1rem 0
+  padding: 2rem 1rem
+
+  .top
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+
+    .left
+      h1
+        font-size: 1.5rem
+        color: var(--color-text-dark)
+        font-weight: bold
+
+      .details
+        font-size: 1rem
+        color: var(--color-text-light)
+
+        .author-page-separator
+          margin: 0 1ch
+          display: inline-block
+
+    .right
+      display: flex
+      flex-direction: row
+      align-items: flex-start
+
+      button
+        border: none
+        font-size: 1rem
+        color: var(--color-primary)
+        text-decoration: underline
+        background-color: inherit
+        cursor: pointer
+
+  .description
+    font-size: 1.5rem
+    color: var(--color-text-dark)
+    margin: 1.5rem 0
+
+  ul.tags
+    display: flex
+    flex-direction: row
+    align-items: center
+
+    li
+      list-style-type: none
+      font-size: 1.5rem
+      color: var(--color-primary)
+      margin-right: 1ch
