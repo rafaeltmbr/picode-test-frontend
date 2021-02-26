@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Main from "./pages/Main";
+import Home from "./pages/Home";
 import "./App.sass";
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
     <Router>
       <Switch>
         <Route exact path="/">
-          <Main />
+          <Home />
         </Route>
       </Switch>
     </Router>
