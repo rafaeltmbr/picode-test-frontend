@@ -21,6 +21,10 @@ export default function Home() {
       .catch(console.error.bind(console));
   }, [setBook, searchString, searchByTagOnly]);
 
+  useEffect(() => {
+    document.body.setAttribute("data-overflow", showRegisterModal ? "hidden" : "");
+  }, [showRegisterModal]);
+
   function handleSearchByTagClick() {
     setSearchByTagOnly(!searchByTagOnly);
   }

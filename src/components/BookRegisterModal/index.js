@@ -23,7 +23,10 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
   }
 
   function handleModalClick(e) {
-    if (e.target.className === "book-register-modal") onCancel();
+    if (e.target.className === "book-register-modal") {
+      console.log("cancel modal");
+      onCancel();
+    }
   }
 
   return (
@@ -36,6 +39,7 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
         <section className="fields">
           <label htmlFor="title">Título do livro</label>
           <input
+            tabIndex="1"
             id="title"
             type="text"
             name="title"
@@ -46,6 +50,7 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
 
           <label htmlFor="author">Autor</label>
           <input
+            tabIndex="2"
             id="author"
             type="text"
             name="author"
@@ -56,6 +61,7 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
 
           <label htmlFor="description">Descrição</label>
           <input
+            tabIndex="3"
             id="description"
             type="text"
             name="description"
@@ -66,6 +72,7 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
 
           <label htmlFor="pages">Páginas</label>
           <input
+            tabIndex="4"
             id="pages"
             type="number"
             min="1"
@@ -78,6 +85,7 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
 
           <label htmlFor="tags">tags</label>
           <input
+            tabIndex="5"
             id="tags"
             type="text"
             name="tags"
@@ -86,16 +94,17 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
           />
         </section>
         <footer>
-          <button
+          <div
+            className="modal-button"
+            tabIndex="7"
             onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
+              console.log("cancel clicked");
               onCancel();
             }}
           >
             Cancelar
-          </button>
-          <button>
+          </div>
+          <button className="modal-button" tabIndex="6">
             <Plus className="plus" size="1.5rem" />
             <span>Adicionar</span>
           </button>
