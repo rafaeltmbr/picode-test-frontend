@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.sass";
 
-export default function BookCard({ book = {} }) {
+export default function BookCard({ book = {}, onDelete = () => {} }) {
   return (
     <div className="book-card">
       <div className="top">
@@ -15,7 +15,7 @@ export default function BookCard({ book = {} }) {
           </div>
         </div>
         <div className="right">
-          <button>remover</button>
+          <button onClick={() => onDelete(book.id)}>remover</button>
         </div>
       </div>
       <div className="description">{`"${book.description || ""}"`}</div>

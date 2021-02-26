@@ -1,50 +1,84 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import ListControls from "../../components/ListControls";
 import BookCard from "../../components/BookCard";
+import BookRegisterModal from "../../components/BookRegisterModal";
+import api from "../../api";
 
 import "./styles.sass";
 
-const books = [
-  {
-    id: 1,
-    title: "Uma breve história do tempo",
-    author: "Stephen Hawking",
-    description: "Hawking e sua descoberta sobre o universo.",
-    pages: 256,
-    tags: ["science"],
-  },
-  {
-    id: 2,
-    title: "Harry Potter e a Pedra Filosofal",
-    author: "J. K. Rowling",
-    description: "Relata o primeiro ano de Harry na escola Hogwarts.",
-    pages: 208,
-    tags: ["fiction", "fantasy"],
-  },
-  {
-    id: 3,
-    title: "Jogos Vorazes",
-    author: "Suzanne Collins",
-    description: "Um reality show onde o ultimo sobrevivente vence",
-    pages: 400,
-    tags: ["fantasy", "fiction"],
-  },
-];
-
 export default function Home() {
+  const [books, setBook] = useState([]);
+  const [searchByTagOnly, setSearchByTagOnly] = useState(false);
+  const [searchString, setSearchString] = useState("");
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+  useEffect(() => {
+    const request = searchByTagOnly ? `books?tag=${searchString}` : `books?search=${searchString}`;
+    api
+      .get(request)
+      .then((res) => setBook(res.data))
+      .catch(console.error.bind(console));
+  }, [setBook, searchString, searchByTagOnly]);
+
+  function handleSearchByTagClick() {
+    setSearchByTagOnly(!searchByTagOnly);
+  }
+
+  function handleSearchStringChange(e) {
+    setSearchString(e.target.value);
+  }
+
+  function handleBookDelete(id) {
+    const request = searchByTagOnly ? `books?tag=${searchString}` : `books?search=${searchString}`;
+    api
+      .delete(`books/${id}`)
+      .then(() => api.get(request))
+      .then((res) => setBook(res.data))
+      .catch(console.error.bind(console));
+  }
+
+  function handleShowRegisterModal() {
+    setShowRegisterModal(true);
+  }
+
+  function handleBookRegister(newBook) {
+    const request = searchByTagOnly ? `books?tag=${searchString}` : `books?search=${searchString}`;
+    api
+      .post("books", newBook, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(() => api.get(request))
+      .then((res) => setBook(res.data))
+      .then(() => setShowRegisterModal(false))
+      .catch(console.error.bind(console));
+  }
+
+  function handleHideRegisterModal() {
+    setShowRegisterModal(false);
+  }
+
   return (
     <div className="home">
       <div className="container">
         <h1>MLPR</h1>
         <h2>Melhores livros para relembrar</h2>
-        <ListControls />
+        <ListControls
+          onSearchByTagClick={handleSearchByTagClick}
+          searchByTagOnly={searchByTagOnly}
+          onSearchStringChange={handleSearchStringChange}
+          searchString={searchString}
+          onRegister={handleShowRegisterModal}
+        />
         <div className="cards-container">
           {books.map((book) => (
-            <BookCard book={book} />
+            <BookCard book={book} onDelete={handleBookDelete} />
           ))}
         </div>
       </div>
+      {showRegisterModal && (
+        <BookRegisterModal onCancel={handleHideRegisterModal} onRegister={handleBookRegister} />
+      )}
     </div>
   );
 }
