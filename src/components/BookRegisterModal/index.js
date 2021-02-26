@@ -10,7 +10,9 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
   const [pages, setPages] = useState(1);
   const [tags, setTags] = useState("");
 
-  function handleFormSubmit() {
+  function handleFormSubmit(e) {
+    e.preventDefault();
+
     const newBook = {
       title,
       author,
@@ -23,10 +25,7 @@ export default function BookRegisterModal({ onRegister = () => {}, onCancel = ()
   }
 
   function handleModalClick(e) {
-    if (e.target.className === "book-register-modal") {
-      console.log("cancel modal");
-      onCancel();
-    }
+    if (e.target.className === "book-register-modal") onCancel();
   }
 
   return (
