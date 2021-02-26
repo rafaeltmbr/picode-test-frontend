@@ -72,7 +72,7 @@ export default function Home() {
         />
         <div className="cards-container">
           {books.map((book) => (
-            <BookCard book={book} onDelete={handleBookDelete} />
+            <BookCard key={book.title} book={book} onDelete={handleBookDelete} />
           ))}
         </div>
       </div>
